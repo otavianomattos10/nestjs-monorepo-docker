@@ -1,0 +1,102 @@
+version: '3'
+
+services:
+  main_receiver:
+    container_name: main_receiver
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.MainReceiver
+    volumes:
+      - ./apps/main-receiver/:/usr/src/app/
+    networks:
+      - monorepo_network
+    ports:
+      - 3000:3000
+      - 9230:9229
+    command: "sh -c 'npm install && npm run start:debug'"
+    depends_on:
+      - filebeat
+
+  first_consumer:
+    container_name: first_consumer
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.FirstConsumer
+    volumes:
+      - ./apps/first-consumer/:/usr/src/app/
+    networks:
+      - monorepo_network
+    ports:
+      - 3001:3001
+      - 9231:9229
+    command: "sh -c 'npm install && npm run start:debug'"
+
+  elasticsearch:    
+    build:
+      context: elasticsearch/
+      args:
+        ELK_VERSION: ${ELK_VERSION}
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro      
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: changeme
+    networks:
+      - "monorepo_network"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+
+  kibana:    
+    build:
+      context: kibana/
+      args:
+        ELK_VERSION: ${ELK_VERSION}      
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    networks:
+      - "monorepo_network"
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5601:5601
+
+  logstash:
+    build:
+      context: logstash/   
+      args:
+        ELK_VERSION: ${ELK_VERSION}      
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    depends_on:
+      - elasticsearch
+      - kibana
+    ports:
+      - "5044:5044/tcp"
+      - "5001:5001/tcp"
+      - "5001:5001/udp"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m" 
+    networks:
+      - "monorepo_network"
+
+  filebeat:    
+    build:
+      context: filebeat/
+      args:
+        ELK_VERSION: ${ELK_VERSION}
+    volumes:
+      # needed to access all docker logs (read only) :
+      - /var/lib/docker/containers:/usr/share/dockerlogs/data:ro
+      # needed to access additional informations about containers
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:      
+      - logstash      
+    networks:
+      - "monorepo_network"
+
+networks:
+  monorepo_network:
+    driver: bridge

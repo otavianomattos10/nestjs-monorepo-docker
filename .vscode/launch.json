@@ -1,0 +1,34 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"type": "node",
+		"request": "attach",
+		"name": "Debug MAIN-RECEIVER",
+		"remoteRoot": "/usr/src/app/",
+		"localRoot": "${workspaceFolder}/apps/main-receiver/",
+		"protocol": "inspector",
+		"port": 9230,
+		"restart": true,
+		"address": "localhost",
+		"sourceMaps": true,
+		"runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+		"skipFiles": ["<node_internals>/**"]
+	  },
+	  {
+		"type": "node",
+		"request": "attach",
+		"name": "Debug FIRST-CONSUMER",
+		"remoteRoot": "/usr/src/app/",
+		"localRoot": "${workspaceFolder}/apps/first-consumer/",
+		"protocol": "inspector",
+		"port": 9231,
+		"restart": true,
+		"address": "localhost",
+		"sourceMaps": true,
+		"runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+		"skipFiles": ["<node_internals>/**"]
+	  }
+	]
+  }
+  

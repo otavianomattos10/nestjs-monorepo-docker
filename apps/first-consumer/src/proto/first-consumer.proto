@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package firstConsumer;
+
+service FirstConsumerService {
+    rpc Create(FirstConsumerRequest) returns (FirstConsumerResponse) {}
+    rpc Update(FirstConsumerRequest) returns (FirstConsumerResponse) {}
+    rpc GetById(FirstConsumerIdRequest) returns (FirstConsumerResponse) {}
+    rpc GetAll(google.protobuf.Empty) returns (FirstConsumersResponse) {}
+    rpc Delete(FirstConsumerIdRequest) returns (google.protobuf.Empty) {}
+}
+
+message FirstConsumerIdRequest{
+    string id = 1;
+}
+
+message FirstConsumerRequest {
+    string id = 1;
+}
+
+message FirstConsumerResponse{
+    string result = 1;
+}
+
+message FirstConsumersResponse{
+    repeated FirstConsumerResponse data = 1;
+}
