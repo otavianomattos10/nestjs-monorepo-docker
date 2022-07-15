@@ -22,11 +22,15 @@ export class MainReceiverController {
     private logger: Logger,
   ) {}
 
-  @Get('/id/:id')
-  async getById(@Param('id') id: string): Promise<string> {
+  @Get('/id/:id/route/:route/origin/:origin')
+  async getById(
+    @Param('id') id: string,
+    @Param('route') route: string,
+    @Param('origin') origin: string,
+  ): Promise<string> {
     console.log(
       JSON.stringify(
-        `{ "id" : ${id}, "message": "Teste de envio com o ID: ${id}"}`,
+        `{"newid":${id},"description":"Teste de envio com o ID: ${id}","route":"${route}","origin":"${origin}"}`,
       ),
     );
     return await this.mainReceiverService.getById(id);
