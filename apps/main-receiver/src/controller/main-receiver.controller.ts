@@ -8,7 +8,6 @@ import {
   Controller,
   Delete,
   Get,
-  Logger,
   Param,
   Post,
   Put,
@@ -17,22 +16,11 @@ import { MainReceiverService } from '../services/main-receiver.service';
 
 @Controller()
 export class MainReceiverController {
-  constructor(
-    private readonly mainReceiverService: MainReceiverService,
-    private logger: Logger,
-  ) {}
+  constructor(private readonly mainReceiverService: MainReceiverService) {}
 
-  @Get('/id/:id/route/:route/origin/:origin')
-  async getById(
-    @Param('id') id: string,
-    @Param('route') route: string,
-    @Param('origin') origin: string,
-  ): Promise<string> {
-    console.log(
-      JSON.stringify(
-        `{"newid":${id},"description":"Teste de envio com o ID: ${id}","route":"${route}","origin":"${origin}"}`,
-      ),
-    );
+  @Get('/id/:id')
+  async getById(@Param('id') id: string): Promise<string> {
+    console.log(JSON.stringify(`{"newid":${id}}`));
     return await this.mainReceiverService.getById(id);
   }
 

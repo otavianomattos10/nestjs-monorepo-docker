@@ -1,6 +1,6 @@
 # compiled output
-apps/first-consumer/node_modules
-apps/main-consumer/node_modules
+node_modules/
+dist/
 apps/first-consumer/dist
 apps/main-consumer/dist
 
@@ -35,3 +35,9 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Db
+grafana.db
+
+# Tmp / Tmpl
+*.tmpl

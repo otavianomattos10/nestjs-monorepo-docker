@@ -1,17 +1,23 @@
+import { Injectable } from '@nestjs/common';
 import {
   DeleteMainReceiverDTO,
   PostMainReceiverDTO,
   PutMainReceiverDTO,
 } from './../dto/main-receiver.dto';
 import { MainReceiverFactory } from './../factory/main-receiver.factory';
-import { Injectable } from '@nestjs/common';
+import { Counter } from 'prom-client';
+import { InjectMetric } from '@willsoto/nestjs-prometheus';
 
 @Injectable()
 export class MainReceiverService {
+  constructor(
+    @InjectMetric('metric_mainreceiver') public counter: Counter<string>,
+  ) {}
+
   async getById(id: string): Promise<string> {
     const factory = new MainReceiverFactory();
     const mainReceiver = factory.create();
-
+    this.counter.labels('teste', '12345').inc();
     return await mainReceiver.getById(id);
   }
 

@@ -20,6 +20,7 @@ export class FirstConsumerController {
 
   @Get('/id/:id')
   async getById(@Param('id') id: string): Promise<string> {
+    console.log(JSON.stringify(`{"newid":${id}}`));
     return await this.firstConsumerService.getById(id);
   }
 

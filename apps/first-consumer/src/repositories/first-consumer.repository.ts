@@ -12,7 +12,7 @@ export class FirstConsumerRepository implements IRepository {
   }
 
   async getAll(): Promise<string> {
-    return `first-consumer: retorna todos`;
+    return `# TYPE db2_prometheus_adapter_info gauge`;
   }
 
   async getById(id: string): Promise<string> {

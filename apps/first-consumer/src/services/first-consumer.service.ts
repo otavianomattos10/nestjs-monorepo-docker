@@ -5,13 +5,19 @@ import {
 } from './../dto/first-consumer.dto';
 import { FirstConsumerFactory } from './../factory/first-consumer.factory';
 import { Injectable } from '@nestjs/common';
+import { InjectMetric } from '@willsoto/nestjs-prometheus';
+import { Counter } from 'prom-client';
 
 @Injectable()
 export class FirstConsumerService {
+  constructor(
+    @InjectMetric('metric_firstconsumer') public counter: Counter<string>,
+  ) {}
+
   async getById(id: string): Promise<string> {
     const factory = new FirstConsumerFactory();
     const firstConsumer = factory.create();
-
+    this.counter.labels('teste', '12345').inc();
     return await firstConsumer.getById(id);
   }
 
