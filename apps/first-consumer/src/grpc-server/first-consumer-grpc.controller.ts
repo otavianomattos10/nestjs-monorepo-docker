@@ -1,3 +1,4 @@
+import { Metadata, ServerUnaryCall, status } from 'grpc';
 import {
   DeleteFirstConsumerDTO,
   PutFirstConsumerDTO,
@@ -13,28 +14,40 @@ export class FirstConsumerGrpcServerController {
 
   @GrpcMethod('FirstConsumerService')
   create(data: PostFirstConsumerDTO) {
+    const { id } = data;
+    console.log(`Chamada recebida com sucesso: create - Id: ${id}!`);
     return this.firstConsumerService.create(data);
   }
 
   @GrpcMethod('FirstConsumerService')
-  update(id: PutFirstConsumerDTO) {
+  update(
+    data: { id: PutFirstConsumerDTO },
+    metadata: Metadata,
+    call: ServerUnaryCall<PutFirstConsumerDTO>,
+  ) {
+    const { id } = data;
+    console.log(`Chamada recebida com sucesso: update - Id: ${id}!`);
     return this.firstConsumerService.update(id);
   }
 
   @GrpcMethod('FirstConsumerService')
-  getById(data: { id: string }) {
+  async getById(data: { id: string }) {
     const { id } = data;
-    return this.firstConsumerService.getById(id);
+    console.log(`Chamada recebida com sucesso: GetById - Id: ${id}!`);
+    const result: string = await this.firstConsumerService.getById(id);
+    return await { description: result };
   }
 
   @GrpcMethod('FirstConsumerService')
   async getAll() {
+    console.log(`Chamada recebida com sucesso: getAll!`);
     const result = await this.firstConsumerService.getAll();
     return { data: result };
   }
 
-  @GrpcMethod('FirstConsumerService', 'Delete')
+  @GrpcMethod('FirstConsumerService')
   async remove(id: DeleteFirstConsumerDTO) {
+    console.log(`Chamada recebida com sucesso: remove!`);
     return await this.firstConsumerService.remove(id);
   }
 }

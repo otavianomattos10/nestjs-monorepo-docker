@@ -5,11 +5,11 @@ import "google/protobuf/empty.proto";
 package firstConsumer;
 
 service FirstConsumerService {
-    rpc Create(FirstConsumerRequest) returns (FirstConsumerResponse) {}
-    rpc Update(FirstConsumerRequest) returns (FirstConsumerResponse) {}
-    rpc GetById(FirstConsumerIdRequest) returns (FirstConsumerResponse) {}
-    rpc GetAll(google.protobuf.Empty) returns (FirstConsumersResponse) {}
-    rpc Delete(FirstConsumerIdRequest) returns (google.protobuf.Empty) {}
+    rpc Create(FirstConsumerRequest) returns (FirstConsumerResponse) {};
+    rpc Update(FirstConsumerRequest) returns (FirstConsumerResponse) {};
+    rpc GetById(FirstConsumerIdRequest) returns (GetByIdResponse) {};
+    rpc GetAll(google.protobuf.Empty) returns (FirstConsumersResponse) {};
+    rpc Remove(FirstConsumerIdRequest) returns (google.protobuf.Empty) {};
 }
 
 message FirstConsumerIdRequest{
@@ -21,7 +21,11 @@ message FirstConsumerRequest {
 }
 
 message FirstConsumerResponse{
-    string result = 1;
+    string id = 1;
+}
+
+message GetByIdResponse{
+    string description = 1;
 }
 
 message FirstConsumersResponse{

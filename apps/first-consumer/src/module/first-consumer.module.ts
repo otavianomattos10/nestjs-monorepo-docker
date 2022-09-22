@@ -5,10 +5,11 @@ import {
   PrometheusModule,
   makeCounterProvider,
 } from '@willsoto/nestjs-prometheus';
+import { FirstConsumerGrpcServerController } from '../grpc-server/first-consumer-grpc.controller';
 
 @Module({
   imports: [PrometheusModule.register()],
-  controllers: [FirstConsumerController],
+  controllers: [FirstConsumerController, FirstConsumerGrpcServerController],
   providers: [
     FirstConsumerService,
     Logger,
