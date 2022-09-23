@@ -86,4 +86,7 @@ Apesar da simplicidade do código, neste exemplo podemos ver a comunicação dos
 Conforme o launch.json do projeto, caso seja necessário, ele já está pronto para realizar o debug da aplicação rodando dentro do próprio container. 
 Para fazer isso, basta a aplicação estar no ar, acessar a aba "Run and Debug" do VSCode, selecionar qual serviço deseja debugar e dar um play. Inclusive, é possível debugar os 2 serviços existentes ao mesmo tempo!
 
+# hot reload
+Caso seja feita qualquer mudança no projeto, basta salvar o arquivo alterado que a própria aplicação irá reiniciar e aplicar a alteração. Isso foi feito para os dois projetos.
+
 ```
