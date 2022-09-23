@@ -82,5 +82,8 @@ O server-gRPC será o projeto First-Consumer e o client-gRPC será o projeto Mai
 # Microsserviço
 Apesar da simplicidade do código, neste exemplo podemos ver a comunicação dos 2 serviços via gRPC. Isso pode ser aplicado no dia-a-dia da forma que for necessária.
 
+# Debug
+Conforme o launch.json do projeto, caso seja necessário, ele já está pronto para realizar o debug da aplicação rodando dentro do próprio container. 
+Para fazer isso, basta a aplicação estar no ar, acessar a aba "Run and Debug" do VSCode, selecionar qual serviço deseja debugar e dar um play. Inclusive, é possível debugar os 2 serviços existentes ao mesmo tempo!
 
 ```
