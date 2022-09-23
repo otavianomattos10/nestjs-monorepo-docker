@@ -26,48 +26,61 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+
+## Executando o Repositório
 
 ```bash
-$ npm install
+# running
+$ docker compose up -d
+
+# Observações
+É possível também subir somemte um serviço do docker compose. Por exemplo: 
+
+$ docker compose up -d grafana
+
 ```
 
-## Running the app
+## Ferramentas Utilizadas e Plugadas
 
 ```bash
-# development
-$ npm run start
+Dentro deste projeto, procurei mesclar ferramentas e práticas que podem nos ajudar no dia-a-dia. Abaixo estarei relacionando de forma simples e objetiva o que foi utilizado:
 
-# watch mode
-$ npm run start:dev
+# ELK - Elasticsearch / Logstash / Kibana / Filebeat
+Utilizei a stack ELK para capturar os logs gerados da aplicação no container. Esses logs serão processados e apresentados no Kibana.
 
-# production mode
-$ npm run start:prod
+# Prometheus
+Estou utilizando o Prometheus para captura de métricas. Neste caso, adicionei dentro do código dos 2 projetos um exemplo simples de como capturar essas métricas.
+
+# Grafana
+O Grafana irá nos auxiliar na apresentação das métricas geradas pelo Prometheus. É um software bem completo e atende muito bem a demonstração de painéis.
+
+# Monorepo
+Estou utilizando o conceito de Monorepo neste projeto, porém realizei algumas modificações em relação a prática sugerida dentro da documentação do NestJS. Resumindo, eu não unifiquei, por exemplo, o package.json dos projetos, pois no conceito de microsserviço, na minha opinião, cada projeto terá suas bibliotecas e dependências que de fato serão utilizadas.
+
+# Projeto dockerizado
+Como você pode ver, o projeto está totalmente dockerizado.
+
 ```
 
-## Test
+## Falando de Código...
 
 ```bash
-# unit tests
-$ npm run test
+Neste projeto eu procurei adicionar algumas coisinhas no código.
 
-# e2e tests
-$ npm run test:e2e
+# Padrão de Projeto: Factory Method e Repository Pattern
+Conforme a estrutura de pastas, eu dividi o serviços, módulos, interfaces, etc. No código, procurei utilizar o padrão Factory Method e Repository Pattern. Segue o link com os detalhes:
 
-# test coverage
-$ npm run test:cov
+https://refactoring.guru/design-patterns/factory-method
+
+# SOLID
+Procurei escrever os códigos utilizando os princípios do SOLID. 
+
+# gRPC
+Neste projeto eu implementei um exemplo simples e funcional de como utilizar a comunicação gRPC. 
+O server-gRPC será o projeto First-Consumer e o client-gRPC será o projeto Main-Receiver. Resumindo...você acionará a rota do Main-Receiver(existe um controller separado para isso) para que ele acione o First-Consumer.
+
+# Microsserviço
+Apesar da simplicidade do código, neste exemplo podemos ver a comunicação dos 2 serviços via gRPC. Isso pode ser aplicado no dia-a-dia da forma que for necessária.
+
+
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
